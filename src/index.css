@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-primary-text font-montserrat;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #474747 #1a1a1a; /* Thumb color, track color */
+}
+
+@keyframes rotateWithTranslate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.rotate-slow {
+  animation: rotateWithTranslate 600s linear infinite; /* Adjust duration if needed */
+}
