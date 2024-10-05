@@ -1,11 +1,24 @@
 import InteractiveBg from "./components/InteractiveBg";
 import MouseCursor from "./components/MouseCursor";
-import moon from "./assets/moon-bg.jpg";
 import LogoNav from "./components/LogoNav";
 import MainSection from "./layout/MainSection";
-type Props = {};
+import NavSection from "./layout/NavSection";
+import { useState } from "react";
 
-const App = (props: Props) => {
+export enum SelectedPageValueType {
+  Home = "home",
+  Navigation = "navigation",
+  AboutUs = "aboutus",
+  OurWork = "ourwork",
+  Prices = "prices",
+  ContactUs = "contactus",
+}
+
+const App = () => {
+  const [selectedPage, setSelectedPage] = useState<SelectedPageValueType>(
+    SelectedPageValueType.Home
+  );
+
   return (
     <div className="bg-black min-h-screen min-w-full relative">
       <MouseCursor />
@@ -13,8 +26,12 @@ const App = (props: Props) => {
       <div className="absolute inset-0">
         <InteractiveBg />
       </div>
-      <LogoNav />
-      <MainSection />
+      <LogoNav setSelectedPage={setSelectedPage} />
+      <MainSection setSelectedPage={setSelectedPage} />
+      <NavSection
+        setSelectedPage={setSelectedPage}
+        selectedPage={selectedPage}
+      />
     </div>
   );
 };
