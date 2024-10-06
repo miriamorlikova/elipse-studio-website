@@ -3,16 +3,36 @@ import moon from "../assets/moon-first-section.png";
 import { GoArrowDownRight } from "react-icons/go";
 import { SelectedPageValueType } from "../App";
 import { motion } from "framer-motion";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+import InteractiveBg from "../components/InteractiveBg";
 
 type MainSectionProps = {
   setSelectedPage: (vaule: SelectedPageValueType) => void;
+  selectedPage: string;
 };
 
-export default function MainSection({ setSelectedPage }: MainSectionProps) {
+export default function MainSection({
+  setSelectedPage,
+  selectedPage,
+}: MainSectionProps) {
   const isMediumScreen = useMediaQuery("(min-width: 1023px)");
+  const arrowUpVariants = {
+    initial: { rotate: 0 },
+    whileHover: { rotate: 225 }, // Downwards rotation when hovering on Home section
+    whileTap: { rotate: 225 },
+  };
+
+  const arrowDownVariants = {
+    initial: { rotate: 0 },
+    whileHover: { rotate: 45 }, // Upwards rotation when hovering on Navigation section
+    whileTap: { rotate: 45 },
+  };
 
   return (
     <section id="home" className="relative">
+      <div className="absolute inset-0 z-0">
+        <InteractiveBg />
+      </div>
       <motion.div
         className="flex flex-col w-screen min-h-screen justify-between"
         onViewportEnter={() => setSelectedPage(SelectedPageValueType.Home)}
@@ -37,11 +57,36 @@ export default function MainSection({ setSelectedPage }: MainSectionProps) {
           </div>
         </div>
         {/* BUTTON FOR MENU */}
-        <div className="basis-1/4 m-4 sm:m-8 flex justify-end">
-          <button className="border rounded-lg p-2 border-primary-text">
-            <GoArrowDownRight className="h-8 w-8 xl:h-12 sm:h-10 sm:w-10 xl:w-12 border-primary-text" />
-          </button>
-        </div>
+        <motion.div className=" m-4 sm:m-8 flex justify-end relative z-10">
+          <AnchorLink
+            className="border-2 rounded-lg p-2 hover:border-primary-text border-neutral-400 transition-colors duration-500"
+            href={
+              selectedPage === SelectedPageValueType.Home
+                ? `#${SelectedPageValueType.Navigation}`
+                : `#${SelectedPageValueType.Home}`
+            }
+            onClick={() =>
+              setSelectedPage(
+                selectedPage === SelectedPageValueType.Home
+                  ? SelectedPageValueType.Navigation
+                  : SelectedPageValueType.Home
+              )
+            }
+          >
+            <motion.div
+              variants={
+                selectedPage === SelectedPageValueType.Home
+                  ? arrowDownVariants
+                  : arrowUpVariants
+              }
+              initial="initial"
+              whileHover="whileHover"
+              whileTap="whileTap"
+            >
+              <GoArrowDownRight className="h-8 w-8 xl:h-12 sm:h-10 sm:w-10 xl:w-12 hover:text-primary-text transition-colors duration-500 text-neutral-300" />
+            </motion.div>
+          </AnchorLink>
+        </motion.div>
       </motion.div>
     </section>
   );

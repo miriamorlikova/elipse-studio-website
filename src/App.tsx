@@ -1,5 +1,5 @@
 import InteractiveBg from "./components/InteractiveBg";
-import MouseCursor from "./components/MouseCursor";
+// import MouseCursor from "./components/MouseCursor";
 import LogoNav from "./components/LogoNav";
 import MainSection from "./layout/MainSection";
 import NavSection from "./layout/NavSection";
@@ -21,13 +21,13 @@ const App = () => {
 
   return (
     <div className="bg-black min-h-screen min-w-full relative">
-      <MouseCursor />
+      {/* <MouseCursor /> */}
 
-      <div className="absolute inset-0">
-        <InteractiveBg />
-      </div>
       <LogoNav setSelectedPage={setSelectedPage} />
-      <MainSection setSelectedPage={setSelectedPage} />
+      <MainSection
+        setSelectedPage={setSelectedPage}
+        selectedPage={selectedPage}
+      />
       <NavSection
         setSelectedPage={setSelectedPage}
         selectedPage={selectedPage}
