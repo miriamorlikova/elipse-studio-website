@@ -1,91 +1,71 @@
-// import { useEffect, useState } from "react";
-// import { useSpring, animated } from "react-spring";
+import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 
-// export default function MouseCursor() {
-//   const [cursorProps, setCursorProps] = useSpring(() => ({
-//     xy: [0, 0],
-//     config: { mass: 10, tension: 550, friction: 140 },
-//   }));
+export default function MouseCursor() {
+  const numCircles = 10;
+  const startPosition = Array.from({ length: numCircles }).map(() => ({
+    x: 0,
+    y: 0,
+  }));
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const circlePositions = useRef(startPosition);
 
-//   const [shadowProps, setShadowProps] = useSpring(() => ({
-//     xy: [0, 0],
-//     config: { mass: 10, tension: 350, friction: 150 },
-//   }));
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      setPosition({ x: e.clientX, y: e.clientY });
+    }
 
-//   const [shadow2Props, setShadow2Props] = useSpring(() => ({
-//     xy: [0, 0],
-//     config: { mass: 10, tension: 250, friction: 160 },
-//   }));
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
-//   const [position, setPosition] = useState([0, 0]);
+  useEffect(() => {
+    // update na zaklade pozice mysi
+    function flameCircles() {
+      const newPositions = [...circlePositions.current];
+      let x = position.x;
+      let y = position.y;
 
-//   useEffect(() => {
-//     const handleMouseMove = (event: MouseEvent) => {
-//       setPosition([event.clientX, event.clientY]);
-//     };
+      // Update kazde dalsi kulicky na zaklade nove pozice, aby nasledovala tu predchozi + mys
+      newPositions.forEach((circle) => {
+        circle.x += (x - circle.x) * 0.75;
+        circle.y += (y - circle.y) * 0.75;
+        x = circle.x;
+        y = circle.y;
+      });
 
-//     window.addEventListener("mousemove", handleMouseMove);
+      circlePositions.current = newPositions;
 
-//     return () => {
-//       window.removeEventListener("mousemove", handleMouseMove);
-//     };
-//   }, []);
+      requestAnimationFrame(flameCircles);
+    }
 
-//   useEffect(() => {
-//     setCursorProps({ xy: position });
-//     setShadowProps({ xy: position });
-//     setShadow2Props({ xy: position });
-//   }, [position, setCursorProps, setShadowProps, setShadow2Props]);
+    flameCircles();
+  }, [position]);
 
-//   return (
-//     <>
-//       {/* MAIN DOT */}
-//       <animated.div
-//         style={{
-//           width: 10,
-//           height: 10,
-//           borderRadius: "50%",
-//           backgroundColor: "white",
-//           position: "fixed",
-//           pointerEvents: "none",
-//           zIndex: 9999,
-//           transform: cursorProps.xy.to(
-//             (x, y) => `translate3d(${x}px, ${y}px, 0)`,
-//           ),
-//         }}
-//       />
-
-//       {/* FIRST SHADOW */}
-//       <animated.div
-//         style={{
-//           width: 8,
-//           height: 8,
-//           borderRadius: "50%",
-//           backgroundColor: "rgba(255, 255, 255, 0.6)",
-//           position: "fixed",
-//           pointerEvents: "none",
-//           zIndex: 9998,
-//           transform: shadowProps.xy.to(
-//             (x, y) => `translate3d(${x - 4}px, ${y - 4}px, 0)`,
-//           ),
-//         }}
-//       />
-
-//       {/* SECOND SHADOW */}
-//       <animated.div
-//         style={{
-//           width: 6,
-//           height: 6,
-//           borderRadius: "50%",
-//           backgroundColor: "rgba(255, 255, 255, 0.3)",
-//           position: "fixed",
-//           pointerEvents: "none",
-//           zIndex: 9997,
-//           transform: shadow2Props.xy.to(
-//             (x, y) => `translate3d(${x - 8}px, ${y - 8}px, 0)`,
-//           ),
-//         }}
-//       />
-//     </>
-//   );
-// }
+  return (
+    <>
+      {circlePositions.current.map((circle, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{
+            x: circle.x - 12,
+            y: circle.y - 12,
+            width: 24 - index * 2,
+            height: 24 - index * 2,
+            borderRadius: "50%",
+            backgroundColor: `#FDF8F3`,
+            position: "fixed",
+            pointerEvents: "none",
+            zIndex: 9999,
+            scale: 1 - index * 0.05,
+            opacity: 1,
+          }}
+          transition={{ duration: 0 }}
+        />
+      ))}
+    </>
+  );
+}

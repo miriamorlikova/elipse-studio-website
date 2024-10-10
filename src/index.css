@@ -11,6 +11,7 @@
 * {
   scrollbar-width: thin;
   scrollbar-color: #474747 #1a1a1a; /* Thumb color, track color */
+  cursor: none;
 }
 
 @keyframes rotateWithTranslate {

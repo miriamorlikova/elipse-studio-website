@@ -3,22 +3,22 @@ import { SelectedPageValueType } from "../App";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
+import useMediaQuery from "../useMediaQuery";
 
 type NavLinkProps = {
   page: string;
-  selectedPage: SelectedPageValueType;
   setSelectedPage: (value: SelectedPageValueType) => void;
   heading: string;
   imgUrl: string;
 };
 
 export default function NavLink({
-  selectedPage,
   setSelectedPage,
   page,
   heading,
   imgUrl,
 }: NavLinkProps) {
+  const IsAboveMediumScreen = useMediaQuery("(min-width: 1024px)");
   const lowerCasePage = page
     .toLowerCase()
     .replace(/ /g, "") as SelectedPageValueType;
@@ -32,7 +32,7 @@ export default function NavLink({
   const left = useTransform(xSpring, [0.6, -0.6], ["60%", "80%"]);
   const top = useTransform(ySpring, [0.5, -0.5], ["40%", "60%"]);
 
-  function handleMouseMove(e) {
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (ref.current == null) {
       return 0;
     }
@@ -43,7 +43,7 @@ export default function NavLink({
     const mouseX = e.clientX - containerSize.left;
     const mouseY = e.clientY - containerSize.top;
 
-    const mouseXpercent = mouseX / width - 0.4; // -0.4 because we are starting at 60% position
+    const mouseXpercent = mouseX / width - 0.4;
     const mouseYpercent = mouseY / height - 0.5;
 
     x.set(mouseXpercent);
@@ -63,9 +63,8 @@ export default function NavLink({
         href={`#${lowerCasePage}`}
         onClick={() => setSelectedPage(lowerCasePage)}
       >
-        {/* JE POTREBA UDELAT JINOU ANIMACI ON SMALLER SCREENS, TAHLE NEVYPADA ON - USEMEDIAQUERY HOOK A CONDITIONALLY ZOBRAZIT BUD TUTO VARIANTU NEBO TU DRUHOU (pro mensi obrazovky mozna aby priletel text cely?) */}
         <div className="flex justify-between items-center ">
-          <div>
+          {IsAboveMediumScreen ? (
             <motion.span
               variants={{
                 initial: {
@@ -106,7 +105,32 @@ export default function NavLink({
                 );
               })}
             </motion.span>
-          </div>
+          ) : (
+            <motion.span
+              variants={{
+                initial: {
+                  x: 0,
+                  y: -3,
+                },
+                whileHover: {
+                  x: 20,
+                  y: 0,
+                },
+                whileTap: {
+                  x: 20,
+                  y: 5,
+                },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+              }}
+              className="relative block z-10 group-hover:text-primary-text text-neutral-400 transition-colors duration-500"
+            >
+              {heading}
+            </motion.span>
+          )}
+
           <motion.img
             src={imgUrl}
             alt={`${heading}`}
