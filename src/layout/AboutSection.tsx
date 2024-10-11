@@ -1,5 +1,4 @@
 import { SelectedPageValueType } from "../App";
-import LogoNav from "../components/LogoNav";
 import image1 from "../assets/woman-tattooing.png";
 import { motion } from "framer-motion";
 
@@ -9,8 +8,7 @@ type AboutSectionProps = {
 
 export default function AboutSection({ setSelectedPage }: AboutSectionProps) {
   return (
-    <section id="aboutus" className="relative px-10 md:px-16">
-      <LogoNav setSelectedPage={setSelectedPage} />
+    <section id="aboutus" className="relative px-10 sm:px-20 md:px-24 xl:px-40">
       <motion.div
         className="py-24 sm:py-40 lg:py-48"
         onViewportEnter={() => setSelectedPage(SelectedPageValueType.AboutUs)}
@@ -18,22 +16,54 @@ export default function AboutSection({ setSelectedPage }: AboutSectionProps) {
         <h1 className="tracking-wide py-9 sm:py-12 uppercase font-orbitron md:text-4xl sm:text-3xl text-2xl">
           About us
         </h1>
-        <div className="flex flex-col lg:flex-row">
-          <div>
+        <div className="flex flex-col gap-8 leading-[1.6rem] xl:leading-8 xl:text-xl xl:mt-6 lg:text-lg sm:text-base text-sm">
+          <p>
+            At Elipse Tattoo Studio, we believe that tattoos are more than just
+            ink on skin—they're a reflection of individuality, personal stories,
+            and deep emotions. Founded five years ago by a team of passionate
+            artists, our journey began with nothing but a dream and the desire
+            to create art that speaks to the soul. Starting out wasn’t easy. We
+            faced our fair share of challenges—finding the right space, gaining
+            trust in a competitive industry, and honing our craft day in and day
+            out. But when you love what you do, you give it everything you’ve
+            got. And that’s exactly what we did.
+          </p>
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
             <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam
-              feugiat, turpis at pulvinar vulputate, erat libero tristique
-              tellus, nec bibendum odio risus sit amet ante. In dapibus augue
-              non sapien. Vivamus porttitor turpis ac leo. Nulla est. Morbi
-              scelerisque luctus velit. Etiam ligula pede, sagittis quis,
-              interdum ultricies, scelerisque eu.
+              Today, we are proud to be a tight-knit team of five dedicated
+              professionals—two gentlemen and three talented ladies—each with
+              years of experience and a true passion for the art of tattooing.
+              With decades of combined experience, we’ve cultivated an
+              environment where creativity, professionalism, and customer care
+              come together seamlessly. Our team brings not only expertise but
+              also joy and enthusiasm to every design, making sure each piece is
+              created with love, care, and attention to detail.
             </p>
-            <p>
-              Quisque tincidunt scelerisque libero. Integer in sapien. Phasellus
-              et lorem id felis nonummy placerat.
-            </p>
+
+            <img
+              src={image1}
+              className="rounded-lg border border-neutral-400 border-opacity-15 w-full max-w-md h-auto lg:w-[100%]"
+            />
           </div>
-          <img src={image1} className="max-w-[60%] h-auto" />
+          <p>
+            At Elipse, every client is unique, and we approach each tattoo with
+            that in mind. From the moment you walk through our doors, we’re here
+            to listen, to understand your vision, and to transform your ideas
+            into something meaningful. Our consultations are always free because
+            we believe the journey to your perfect tattoo starts with a
+            conversation. Whether it’s your first tattoo or you’re adding to
+            your collection, we are here to make the experience as comfortable
+            and personalized as possible.
+          </p>
+          <p>
+            We’ve built strong relationships with our clients over the years by
+            ensuring every design is tailored to their individual needs and
+            desires. Your satisfaction is our priority, and we take pride in
+            crafting tattoos that stand the test of time. Elipse Tattoo Studio
+            is not just a place for tattoos—it’s a space where art, passion, and
+            human connection intersect. We love what we do, and we can’t wait to
+            bring your vision to life.
+          </p>
         </div>
       </motion.div>
     </section>

@@ -23,7 +23,6 @@ const App = () => {
   return (
     <div className="bg-black min-h-screen min-w-full relative">
       <MouseCursor />
-
       <LogoNav setSelectedPage={setSelectedPage} />
       <MainSection
         setSelectedPage={setSelectedPage}
