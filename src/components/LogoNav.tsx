@@ -31,7 +31,7 @@ export default function LogoNav({ setSelectedPage }: LogoNavProps) {
   }, []);
 
   return (
-    <motion.div className="relative z-10">
+    <motion.div className="relative z-30">
       {isMoonVisible && (
         <AnchorLink
           href={`#${"navigation"}`}

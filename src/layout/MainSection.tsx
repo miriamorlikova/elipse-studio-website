@@ -18,18 +18,19 @@ export default function MainSection({
   const isMobileScreen = useMediaQuery("(max-width: 445px)");
   const arrowUpVariants = {
     initial: { rotate: 0 },
-    whileHover: { rotate: 225 }, // Downwards rotation when hovering on Home section
+    whileHover: { rotate: 225 },
     whileTap: { rotate: 225 },
   };
 
   const arrowDownVariants = {
     initial: { rotate: 0 },
-    whileHover: { rotate: 45 }, // Upwards rotation when hovering on Navigation section
+    whileHover: { rotate: 45 },
     whileTap: { rotate: 45 },
   };
 
   return (
     <section id="home" className="relative">
+      {/* STARS / BG */}
       <div className="absolute inset-0 z-0">
         <InteractiveBg />
       </div>

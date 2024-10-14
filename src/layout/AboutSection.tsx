@@ -1,6 +1,7 @@
 import { SelectedPageValueType } from "../App";
 import image1 from "../assets/woman-tattooing.png";
 import { motion } from "framer-motion";
+import H1Text from "../components/H1Text";
 
 type AboutSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;
@@ -10,13 +11,20 @@ export default function AboutSection({ setSelectedPage }: AboutSectionProps) {
   return (
     <section id="aboutus" className="relative px-10 sm:px-20 md:px-24 xl:px-40">
       <motion.div
-        className="py-24 sm:py-40 lg:py-48"
+        className="py-24 sm:py-32 lg:py-36"
         onViewportEnter={() => setSelectedPage(SelectedPageValueType.AboutUs)}
       >
-        <h1 className="tracking-wide py-9 sm:py-12 uppercase font-orbitron md:text-4xl sm:text-3xl text-2xl">
-          About us
-        </h1>
-        <div className="flex flex-col gap-8 leading-[1.6rem] xl:leading-8 xl:text-xl xl:mt-6 lg:text-lg sm:text-base text-sm">
+        {/* HEADER */}
+        <H1Text>About us</H1Text>
+
+        {/* TEXT + IMG */}
+        <motion.div
+          className="flex flex-col gap-8 leading-[1.6rem] xl:leading-8 xl:text-xl xl:mt-6 lg:text-lg sm:text-base text-sm"
+          initial={{ opacity: 0, x: -70 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ delay: 0.3, type: "spring" }}
+        >
           <p>
             At Elipse Tattoo Studio, we believe that tattoos are more than just
             ink on skin—they're a reflection of individuality, personal stories,
@@ -64,7 +72,7 @@ export default function AboutSection({ setSelectedPage }: AboutSectionProps) {
             human connection intersect. We love what we do, and we can’t wait to
             bring your vision to life.
           </p>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

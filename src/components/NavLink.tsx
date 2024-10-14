@@ -56,7 +56,7 @@ export default function NavLink({
       initial="initial"
       whileHover="whileHover"
       whileTap="whileTap"
-      className="group tracking-wide py-9 sm:py-12 uppercase font-orbitron md:text-4xl sm:text-3xl text-2xl border-b-2 border-neutral-500 hover:border-primary-text relative transition-colors duration-500 "
+      className="group tracking-wide py-9 sm:py-12 uppercase font-orbitron md:text-4xl  sm:text-3xl text-2xl border-b-2 border-neutral-500 hover:border-primary-text relative transition-colors duration-500 "
       onMouseMove={handleMouseMove}
     >
       <AnchorLink
