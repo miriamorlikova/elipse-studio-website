@@ -7,6 +7,7 @@ import NavSection from "./layout/NavSection";
 import AboutSection from "./layout/AboutSection";
 import WorkSection from "./layout/WorkSection";
 import PricesSection from "./layout/PricesSection";
+import ContactSection from "./layout/ContactSection";
 
 export enum SelectedPageValueType {
   Home = "home",
@@ -18,14 +19,20 @@ export enum SelectedPageValueType {
 }
 
 const App = () => {
-  const lenis = useLenis(({ scroll }) => {});
   const [selectedPage, setSelectedPage] = useState<SelectedPageValueType>(
     SelectedPageValueType.Home
   );
 
   return (
     <div className="bg-black min-h-screen min-w-full relative">
-      <ReactLenis root>
+      <ReactLenis
+        root
+        options={{
+          smoothWheel: true, // Enable smooth scrolling with the wheel
+          duration: 1.5,
+          easing: (t) => 1 - Math.pow(1 - t, 4), // pomale zrychlovani a zpomalovani rozjezdu scrollovani
+        }}
+      >
         <MouseCursor />
         <LogoNav setSelectedPage={setSelectedPage} />
         <MainSection
@@ -36,6 +43,7 @@ const App = () => {
         <AboutSection setSelectedPage={setSelectedPage} />
         <WorkSection setSelectedPage={setSelectedPage} />
         <PricesSection setSelectedPage={setSelectedPage} />
+        <ContactSection setSelectedPage={setSelectedPage} />
       </ReactLenis>
     </div>
   );
