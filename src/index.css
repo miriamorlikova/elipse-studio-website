@@ -23,6 +23,27 @@
   }
 }
 
+/* MOON ROTATION */
 .rotate-slow {
-  animation: rotateWithTranslate 600s linear infinite; /* Adjust duration if needed */
+  animation: rotateWithTranslate 600s linear infinite;
+}
+
+/* INPUT AUTOFILL STYLES */
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-text-fill-color: #fdf8f3 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  transition:
+    background-color 10000s ease-in-out 0s,
+    color 0s !important; /* tohle zamezuje prohlizeci aby zmenil pozadi na svou vlastni defaultni barvu na 10000s, coz je dost dlouha doba na to, aby se to v podstate pro usera nikdy nestalo */
+}
+
+/* INPUT AUTOFILL STYLES FOR CHROME */
+input:-internal-autofill-previewed,
+textarea:-internal-autofill-previewed {
+  -webkit-text-fill-color: #fdf8f3 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
 }

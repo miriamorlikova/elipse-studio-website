@@ -38,7 +38,7 @@ export default function NavSection({ setSelectedPage }: NavSectionProps) {
             imgUrl={pricesImg}
           />
           <NavLink
-            page="aboutus"
+            page="contactus"
             setSelectedPage={setSelectedPage}
             heading="contact us"
             imgUrl={contactuUsImg}

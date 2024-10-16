@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { SelectedPageValueType } from "../App";
 import H1Text from "../components/H1Text";
+import Input from "../components/Input";
+import { BiSend } from "react-icons/bi";
 
 type ContactSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;
@@ -19,68 +21,49 @@ export default function ContactSection({
         onViewportEnter={() => setSelectedPage(SelectedPageValueType.ContactUs)}
       >
         {/* FORM - name, email address, phone number (optional), preferable date, and textarea for message, using https://www.emailjs.com/ + material UI icon for preferable date?? maybe something like that? */}
+
         <H1Text>Contact Us</H1Text>
 
-        <form className="flex flex-col gap-4 bg-neutral-600 bg-opacity-10 p-4 rounded-lg my-12">
-          <div className="flex-grow border-b-2 border-neutral-500 py-4 transition-colors duration-500 ">
-            <motion.input
-              type="text"
-              name="name"
-              className="bg-transparent py-4 placeholder:hover:text-primary-text placeholder:active:text-primary-text placeholder:focus:text-primary-text placeholder:text-neutral-400 text-lg w-full focus:outline-none"
-              placeholder="Your name *"
-              initial={{ x: 0 }}
-              whileHover={{ x: 20 }}
-              whileTap={{ x: 0 }}
-              transition={{ type: "spring" }}
-            />
-          </div>
-          <div className="flex-grow border-b-2 border-neutral-500 py-4">
-            <motion.input
-              type="email"
-              name="email"
-              className="bg-transparent py-4 placeholder:hover:text-primary-text placeholder:active:text-primary-text placeholder:focus:text-primary-text placeholder:text-neutral-400 text-lg w-full focus:outline-none"
-              placeholder="Your email *"
-              initial={{ x: 0 }}
-              whileHover={{ x: 20 }}
-              whileTap={{ x: 0 }}
-              transition={{ type: "spring" }}
-            />
-          </div>
-          <div className="flex-grow border-b-2 border-neutral-500 py-4">
-            <motion.input
-              type="text"
-              name="phone"
-              className="bg-transparent py-4 placeholder:hover:text-primary-text placeholder:active:text-primary-text placeholder:focus:text-primary-text placeholder:text-neutral-400 text-lg w-full focus:outline-none"
-              placeholder="Your phone number (optional)"
-              initial={{ x: 0 }}
-              whileHover={{ x: 20 }}
-              whileTap={{ x: 0 }}
-              transition={{ type: "spring" }}
-            />
-          </div>
-          <div className="flex-grow border-b-2 border-neutral-500 py-4">
-            <motion.input
-              type="text"
-              name="date"
-              className="bg-transparent py-4 placeholder:hover:text-primary-text placeholder:active:text-primary-text placeholder:focus:text-primary-text placeholder:text-neutral-400 text-lg w-full focus:outline-none"
-              placeholder="Preferred date of appointment *"
-              initial={{ x: 0 }}
-              whileHover={{ x: 20 }}
-              whileTap={{ x: 0 }}
-              transition={{ type: "spring" }}
-            />
-          </div>
+        <form className="flex flex-col bg-neutral-600 bg-opacity-10 px-4 pb-4 rounded-lg my-6 md:my-12">
+          <Input type="text" name="name" placeholder="Your name *" required />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Your email *"
+            required
+          />
+          <Input
+            type="text"
+            name="phone"
+            placeholder="Your phone number (optional)"
+          />
+          <Input
+            type="text"
+            name="date"
+            placeholder="Preferred date of appointment"
+          />
           <div className="flex-grow border-b-2 border-neutral-500 py-4">
             <motion.textarea
               name="message"
               placeholder="Your message (optional)"
-              className="bg-transparent py-4 placeholder:hover:text-primary-text placeholder:active:text-primary-text placeholder:focus:text-primary-text placeholder:text-neutral-400 text-lg w-full focus:outline-none min-h-[300px]"
+              className="bg-transparent py-4 placeholder:hover:text-primary-text placeholder:active:text-primary-text placeholder:focus:text-primary-text placeholder:text-neutral-400 xl:placeholder:text-2xl xl:py-6 sm:placeholder:text-base placeholder:text-xs text-base xl:text-2xl sm:text-md md:text-lg w-full focus:outline-none min-h-[300px]"
               initial={{ x: 0 }}
               whileHover={{ x: 20 }}
-              whileTap={{ x: 0 }}
+              whileTap={{ x: 20 }}
               transition={{ type: "spring" }}
             />
           </div>
+
+          {/* vymyslet, jak by mohla tahle sipecka odletet when submitting the form? Then come back after toaster "form submitted" */}
+          <motion.button
+            type="submit"
+            className=""
+            initial={{ x: 0, opacity: 1 }}
+            whileTap={{ x: 100 }}
+            transition={{ type: "spring" }}
+          >
+            <BiSend />
+          </motion.button>
         </form>
       </motion.div>
     </section>
