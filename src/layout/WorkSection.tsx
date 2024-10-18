@@ -90,10 +90,9 @@ export default function WorkSection({ setSelectedPage }: WorkSectionProps) {
             transition={{ duration: 0.1 }}
           >
             {imgArray.map((image, index) => (
-              <motion.div variants={childVariant}>
+              <motion.div key={index} variants={childVariant}>
                 <img
                   src={image}
-                  key={index}
                   alt={image}
                   className="w-full h-auto object-cover"
                 />
