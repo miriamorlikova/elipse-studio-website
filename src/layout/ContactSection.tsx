@@ -5,6 +5,8 @@ import Input from "../components/Input";
 import { BiSend } from "react-icons/bi";
 import { useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import Loader from "../components/Loader";
 
 type ContactSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;
@@ -18,10 +20,11 @@ export default function ContactSection({
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const buttonAnimation = useAnimation();
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    setIsLoading(true);
     const serviceId = "service_iiz6thm";
     const templateId = "template_ardlf6n";
     const publicKey = "Il5xJ35HYTxPc5Uce";
@@ -45,29 +48,71 @@ export default function ContactSection({
         "https://api.emailjs.com/api/v1.0/email/send",
         data
       );
-
+      // flying right and dissapear
       await buttonAnimation.start({
         x: 300,
         opacity: 0,
         transition: { type: "spring", duration: 0.8 },
       });
 
+      // fly back from the left side
+      buttonAnimation.start({
+        x: -10000,
+        opacity: 1,
+        transition: { type: "spring", bounce: 0, duration: 0.8 },
+      });
+      // back to the original position
       setTimeout(() => {
         buttonAnimation.start({
           x: 0,
-          opacity: 1,
-          transition: { type: "spring", duration: 0.8 },
+          transition: { type: "spring", bounce: 0, duration: 0.8 },
         });
-      }, 1000);
+      }, 800);
 
-      console.log(res.data);
+      if (res.data === "OK") {
+        toast.success("Email sent. We'll get back to you soon!", {
+          style: {
+            border: "1px solid #FDF8F3",
+            padding: "16px",
+            color: "#FDF8F3",
+            background: "#101010",
+            boxShadow: "2px 2px 5px #dad7d556",
+          },
+          iconTheme: {
+            primary: "#2f9500",
+            secondary: "#FFFAEE",
+          },
+          duration: 5000,
+        });
+      }
+
+      if (res.data !== "OK") {
+      }
+
       setName("");
       setEmail("");
       setPhone("");
       setDate("");
       setMessage("");
     } catch (error) {
+      toast.error("Failed to send. Please try again.", {
+        style: {
+          border: "2px solid #FDF8F3",
+          padding: "16px",
+          color: "#FDF8F3",
+          background: "#101010",
+          boxShadow: "2px 2px 5px #dad7d556",
+        },
+        iconTheme: {
+          primary: "#950700",
+          secondary: "#FFFAEE",
+        },
+        duration: 5000,
+      });
+
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -76,16 +121,17 @@ export default function ContactSection({
       id="contactus"
       className="relative min-w-screen px-10 sm:px-20 md:px-24 xl:px-40"
     >
+      {isLoading && <Loader />}
       <motion.div
         className="py-24 sm:py-32 lg:py-36"
         onViewportEnter={() => setSelectedPage(SelectedPageValueType.ContactUs)}
       >
+        <Toaster position="top-center" />
         <H1Text>Contact Us</H1Text>
 
-        {/* TOASTERY - for submitting the form, maybe some error messages when user fills the form not as expected*/}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col bg-neutral-600 bg-opacity-10 px-4 pb-4 rounded-lg my-6 md:my-12"
+          className="flex flex-col bg-neutral-600 bg-opacity-10 px-4 rounded-lg my-6 md:my-12"
         >
           <Input
             type="text"
@@ -126,20 +172,19 @@ export default function ContactSection({
               whileHover={{ x: 20 }}
               whileTap={{ x: 20 }}
               transition={{ type: "spring" }}
-              required
               onChange={(e) => setMessage(e.target.value)}
             />
           </div>
 
-          {/* vylepsit animaci, mozna aby sipka priletela z druhe strany? */}
           <div className="flex justify-end ">
             <motion.button
               type="submit"
-              className="p-6"
-              initial={{ x: 0, opacity: 1 }}
+              className="sm:p-6 px-2 py-4 md:p-8 hover:text-primary-text text-neutral-400 transition-colors duration-500"
+              initial={{ x: 0, opacity: 1, scale: 1 }}
               animate={buttonAnimation}
+              whileHover={{ scale: 1.2 }}
             >
-              <BiSend className="h-8 w-8" />
+              <BiSend className="sm:h-8 sm:w-8 h-6 w-6 md:h-10 md:w-10 " />
             </motion.button>
           </div>
         </form>

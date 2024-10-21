@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
+import { ReactLenis } from "@studio-freight/react-lenis";
 import MouseCursor from "./components/MouseCursor";
 import LogoNav from "./components/LogoNav";
 import MainSection from "./layout/MainSection";
@@ -8,6 +8,8 @@ import AboutSection from "./layout/AboutSection";
 import WorkSection from "./layout/WorkSection";
 import PricesSection from "./layout/PricesSection";
 import ContactSection from "./layout/ContactSection";
+import Loader from "./components/Loader";
+import FooterSection from "./layout/FooterSection";
 
 export enum SelectedPageValueType {
   Home = "home",
@@ -44,6 +46,7 @@ const App = () => {
         <WorkSection setSelectedPage={setSelectedPage} />
         <PricesSection setSelectedPage={setSelectedPage} />
         <ContactSection setSelectedPage={setSelectedPage} />
+        <FooterSection />
       </ReactLenis>
     </div>
   );

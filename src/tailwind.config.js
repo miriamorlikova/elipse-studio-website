@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         "primary-text": "#FDF8F3", //body text, main text color
+        "primary-bg": "rgb(82,82,82,10)",
       },
 
       fontFamily: {
@@ -22,12 +23,6 @@ module.exports = {
         xxs: "0.55rem",
         "10xl": "8.5rem",
       },
-      content: {
-        moon: "url('./assets/moon-bg.jpg')",
-      },
-      backgroundImage: (theme) => ({
-        "moon-home": "url('./src/assets/moon-bg.jpg')",
-      }),
     },
     screens: {
       xs: "480px",
