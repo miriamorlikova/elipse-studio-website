@@ -90,3 +90,13 @@ textarea:-internal-autofill-previewed {
   background-size: 20% 50%;
   animation: loading 1s infinite linear;
 }
+
+.react-datepicker__header {
+  background-color: #a3a3a3; /* Darker header */
+  border-bottom: 1px solid #333;
+}
+
+.react-datepicker__day--selected {
+  background-color: #cdcdcd; /* Custom selected day color */
+  color: #000000;
+}

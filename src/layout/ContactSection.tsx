@@ -7,6 +7,10 @@ import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "../components/Loader";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+
+// VYRESIT CHYBOVE HLASKY - napr pokud user vybere datum v minulosti nebo vlozi telefonni cislo delsi nez ma byt apod.
 
 type ContactSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;
@@ -18,10 +22,16 @@ export default function ContactSection({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<Date | null>(null);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const buttonAnimation = useAnimation();
+
+  function handleDateChange(selectedDate: Date | null) {
+    setDate(selectedDate);
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
@@ -92,7 +102,7 @@ export default function ContactSection({
       setName("");
       setEmail("");
       setPhone("");
-      setDate("");
+      setDate(null);
       setMessage("");
     } catch (error) {
       toast.error("Failed to send. Please try again.", {
@@ -155,12 +165,27 @@ export default function ContactSection({
             pattern="/^(+420)?[0-9]{9}$/"
             onChange={(e) => setPhone(e.target.value)}
           />
-          <Input
-            type="text"
-            value={date}
-            placeholder="Preferred date of appointment"
-            onChange={(e) => setDate(e.target.value)}
-          />
+          <div className="flex-grow border-b-2 border-neutral-500 sm:py-4 py-2">
+            <DatePicker
+              selected={date}
+              onChange={handleDateChange}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Preferred date of appointment"
+              customInput={
+                <motion.input
+                  type="text"
+                  className="input sm:min-w-[500px]"
+                  placeholder="Preferred date of appointment"
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 20 }}
+                  whileTap={{ x: 20 }}
+                  transition={{ type: "spring" }}
+                />
+              }
+              calendarClassName="bg-black text-primary-text border border-opacity-50 border-primary-text shadow-lg"
+              dayClassName={() => "text-neutral-300 hover:text-neutral-800"}
+            />
+          </div>
           <div className="flex-grow border-b-2 border-neutral-500 py-4">
             <motion.textarea
               value={message}
