@@ -1,4 +1,4 @@
-import useMediaQuery from "../useMediaQuery";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import { AiOutlineMoon } from "react-icons/ai";
 
 export default function FooterSection() {

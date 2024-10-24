@@ -1,9 +1,11 @@
-import { GoArrowRight } from "react-icons/go";
-import { SelectedPageValueType } from "../App";
+import { useRef } from "react";
+
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef } from "react";
-import useMediaQuery from "../useMediaQuery";
+import { GoArrowRight } from "react-icons/go";
+
+import { SelectedPageValueType } from "../App";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 type NavLinkProps = {
   page: string;

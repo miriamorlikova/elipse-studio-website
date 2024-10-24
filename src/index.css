@@ -92,11 +92,11 @@ textarea:-internal-autofill-previewed {
 }
 
 .react-datepicker__header {
-  background-color: #a3a3a3; /* Darker header */
+  background-color: #a3a3a3;
   border-bottom: 1px solid #333;
 }
 
 .react-datepicker__day--selected {
-  background-color: #cdcdcd; /* Custom selected day color */
+  background-color: #cdcdcd;
   color: #000000;
 }

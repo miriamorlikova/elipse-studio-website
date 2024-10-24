@@ -1,7 +1,7 @@
-import { SelectedPageValueType } from "../App";
-import image1 from "../assets/woman-tattooing.png";
 import { motion } from "framer-motion";
 import H1Text from "../components/H1Text";
+import image1 from "../assets/woman-tattooing.png";
+import { SelectedPageValueType } from "../App";
 
 type AboutSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;

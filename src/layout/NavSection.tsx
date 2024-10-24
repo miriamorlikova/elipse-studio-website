@@ -1,10 +1,13 @@
-import { SelectedPageValueType } from "../App";
-import NavLink from "../components/NavLink";
 import { motion } from "framer-motion";
+
+import NavLink from "../components/NavLink";
+
 import aboutUsImg from "../assets/about-us.png";
 import contactuUsImg from "../assets/contact-us.png";
 import ourWorkImg from "../assets/our-work.png";
 import pricesImg from "../assets/prices.png";
+
+import { SelectedPageValueType } from "../App";
 
 type NavSectionProps = {
   setSelectedPage: (vaule: SelectedPageValueType) => void;

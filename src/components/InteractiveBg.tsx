@@ -1,7 +1,7 @@
 import React, { useRef, useMemo, useCallback } from "react";
+
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
-import { MathUtils } from "three";
 import { Points as ThreePoints } from "three";
 
 type PointsRef = React.MutableRefObject<ThreePoints | null>;
@@ -44,26 +44,11 @@ function PointsComponent({ pointsRef }: { pointsRef: PointsRef }) {
 export default function InteractiveBg() {
   const pointsRef = useRef<ThreePoints | null>(null);
 
-  // MOUSE MOVEMENT
-  // const handlePointerMove = useCallback((e: any) => {
-  //   if (pointsRef.current) {
-  //     const deltaX = MathUtils.lerp(0, e.movementX * 0.0005, 0.1);
-  //     const deltaY = MathUtils.lerp(0, e.movementY * 0.0005, 0.1);
-  //     pointsRef.current.rotation.x += deltaY;
-  //     pointsRef.current.rotation.y += deltaX;
-  //   }
-  // }, []);
-
   return (
     <div className="relative h-full w-full">
-      <Canvas
-        className="absolute left-0 top-0 h-full w-full"
-       
-      >
+      <Canvas className="absolute left-0 top-0 h-full w-full">
         <PointsComponent pointsRef={pointsRef} />
       </Canvas>
     </div>
   );
 }
-
-

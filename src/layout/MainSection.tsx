@@ -1,10 +1,13 @@
-import useMediaQuery from "../hooks/useMediaQuery";
-import moon from "../assets/moon-first-section.png";
-import { GoArrowDownRight } from "react-icons/go";
-import { SelectedPageValueType } from "../App";
 import { motion } from "framer-motion";
 import AnchorLink from "react-anchor-link-smooth-scroll";
+import { GoArrowDownRight } from "react-icons/go";
+
 import InteractiveBg from "../components/InteractiveBg";
+
+import moon from "../assets/moon-first-section.png";
+
+import { SelectedPageValueType } from "../App";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 type MainSectionProps = {
   setSelectedPage: (vaule: SelectedPageValueType) => void;

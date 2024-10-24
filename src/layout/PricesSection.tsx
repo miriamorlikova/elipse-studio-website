@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { SelectedPageValueType } from "../App";
+
 import H1Text from "../components/H1Text";
 import PriceListItem from "../components/PriceListItem";
+
+import { SelectedPageValueType } from "../App";
 
 type PricesSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;

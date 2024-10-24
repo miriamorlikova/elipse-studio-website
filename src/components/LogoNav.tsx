@@ -1,8 +1,10 @@
-import { SelectedPageValueType } from "../App";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+
+import { motion } from "framer-motion";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { AiOutlineMoon } from "react-icons/ai";
+
+import { SelectedPageValueType } from "../App";
 
 type LogoNavProps = {
   setSelectedPage: (vaule: SelectedPageValueType) => void;

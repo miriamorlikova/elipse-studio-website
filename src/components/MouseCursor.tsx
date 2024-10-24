@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function MouseCursor() {
   const numCircles = 10;

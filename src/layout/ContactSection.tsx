@@ -1,16 +1,18 @@
+import { useState } from "react";
+
+import axios from "axios";
 import { motion, useAnimation } from "framer-motion";
-import { SelectedPageValueType } from "../App";
+import toast, { Toaster } from "react-hot-toast";
+import { BiSend } from "react-icons/bi";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns"; 
+
 import H1Text from "../components/H1Text";
 import Input from "../components/Input";
-import { BiSend } from "react-icons/bi";
-import { useState } from "react";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 import Loader from "../components/Loader";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
 
-// VYRESIT CHYBOVE HLASKY - napr pokud user vybere datum v minulosti nebo vlozi telefonni cislo delsi nez ma byt apod.
+import { SelectedPageValueType } from "../App";
 
 type ContactSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;
@@ -24,20 +26,108 @@ export default function ContactSection({
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState<Date | null>(null);
   const [message, setMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [dateError, setDateError] = useState("");
+  const [nameError, setNameError] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
 
   const buttonAnimation = useAnimation();
+  const errorMessageStyle = {
+    style: {
+      border: "2px solid #FDF8F3",
+      padding: "16px",
+      color: "#FDF8F3",
+      background: "#101010",
+      boxShadow: "2px 2px 5px #dad7d556",
+    },
+    iconTheme: {
+      primary: "#950700",
+      secondary: "#FFFAEE",
+    },
+    duration: 5000,
+  };
+  const successMessageStyle = {
+    style: {
+      border: "1px solid #FDF8F3",
+      padding: "16px",
+      color: "#FDF8F3",
+      background: "#101010",
+      boxShadow: "2px 2px 5px #dad7d556",
+    },
+    iconTheme: {
+      primary: "#2f9500",
+      secondary: "#FFFAEE",
+    },
+    duration: 5000,
+  };
+
+  function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setName(e.target.value);
+
+    if (e.target.value.length > 50) {
+      setNameError("Your name is too long.");
+    } else {
+      setNameError("");
+    }
+  }
+
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(e.target.value);
+
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+    if (!emailPattern.test(e.target.value)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  }
+
+  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPhone(e.target.value);
+
+    const phonePattern = /^(?:\+420)?[0-9]{9}$/;
+
+    if (!phonePattern.test(e.target.value)) {
+      setPhoneError(
+        "Please enter a valid phone number (9 digits or +420 with 9 digits)."
+      );
+    } else {
+      setPhoneError("");
+    }
+  }
 
   function handleDateChange(selectedDate: Date | null) {
-    setDate(selectedDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate && selectedDate < today) {
+      setDateError("Please select a date that is not in the past.");
+    } else {
+      setDateError("");
+      setDate(selectedDate);
+    }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (nameError || emailError || phoneError || dateError) {
+      toast.error(
+        "Please fix the errors before submitting.",
+        errorMessageStyle
+      );
+      return;
+    }
+
     setIsLoading(true);
     const serviceId = "service_iiz6thm";
     const templateId = "template_ardlf6n";
     const publicKey = "Il5xJ35HYTxPc5Uce";
+
+    const formattedDate = date ? format(date, "dd/MM/yyyy") : "";
 
     const data = {
       service_id: serviceId,
@@ -47,7 +137,7 @@ export default function ContactSection({
         from_name: name,
         from_email: email,
         from_phone: phone,
-        date: date,
+        date: formattedDate,
         to_name: "Elipse Tattoo Studio",
         message: message,
       },
@@ -58,20 +148,16 @@ export default function ContactSection({
         "https://api.emailjs.com/api/v1.0/email/send",
         data
       );
-      // flying right and dissapear
       await buttonAnimation.start({
         x: 300,
         opacity: 0,
         transition: { type: "spring", duration: 0.8 },
       });
-
-      // fly back from the left side
       buttonAnimation.start({
         x: -10000,
         opacity: 1,
         transition: { type: "spring", bounce: 0, duration: 0.8 },
       });
-      // back to the original position
       setTimeout(() => {
         buttonAnimation.start({
           x: 0,
@@ -80,20 +166,10 @@ export default function ContactSection({
       }, 800);
 
       if (res.data === "OK") {
-        toast.success("Email sent. We'll get back to you soon!", {
-          style: {
-            border: "1px solid #FDF8F3",
-            padding: "16px",
-            color: "#FDF8F3",
-            background: "#101010",
-            boxShadow: "2px 2px 5px #dad7d556",
-          },
-          iconTheme: {
-            primary: "#2f9500",
-            secondary: "#FFFAEE",
-          },
-          duration: 5000,
-        });
+        toast.success(
+          "Email sent. We'll get back to you soon!",
+          successMessageStyle
+        );
       }
 
       if (res.data !== "OK") {
@@ -105,20 +181,7 @@ export default function ContactSection({
       setDate(null);
       setMessage("");
     } catch (error) {
-      toast.error("Failed to send. Please try again.", {
-        style: {
-          border: "2px solid #FDF8F3",
-          padding: "16px",
-          color: "#FDF8F3",
-          background: "#101010",
-          boxShadow: "2px 2px 5px #dad7d556",
-        },
-        iconTheme: {
-          primary: "#950700",
-          secondary: "#FFFAEE",
-        },
-        duration: 5000,
-      });
+      toast.error("Failed to send. Please try again.", errorMessageStyle);
 
       console.error(error);
     } finally {
@@ -148,23 +211,32 @@ export default function ContactSection({
             value={name}
             placeholder="Your name *"
             required
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
           />
+          {nameError && (
+            <p className="text-red-500 text-sm mt-2">{nameError}</p>
+          )}
           <Input
             type="email"
             value={email}
             placeholder="Your email *"
-            pattern="/^[A-Z0-9._%+-]+@[A-Z0-9._-]+\.[A-Z]{2,}$/i"
+            pattern="/^[A-Z0-9._%+-]+@[A-Z0-9._-]+.[A-Z]{2,}$/i"
             required
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
           />
+          {emailError && (
+            <p className="text-red-500 text-sm mt-2">{emailError}</p>
+          )}
           <Input
             type="text"
             value={phone}
             placeholder="Your phone number (optional)"
             pattern="/^(+420)?[0-9]{9}$/"
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={handlePhoneChange}
           />
+          {phoneError && (
+            <p className="text-red-500 text-sm mt-2">{phoneError}</p>
+          )}
           <div className="flex-grow border-b-2 border-neutral-500 sm:py-4 py-2">
             <DatePicker
               selected={date}
@@ -186,6 +258,9 @@ export default function ContactSection({
               dayClassName={() => "text-neutral-300 hover:text-neutral-800"}
             />
           </div>
+          {dateError && (
+            <p className="text-red-500 text-sm mt-2">{dateError}</p>
+          )}
           <div className="flex-grow border-b-2 border-neutral-500 py-4">
             <motion.textarea
               value={message}

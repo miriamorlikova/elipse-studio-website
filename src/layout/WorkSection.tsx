@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { SelectedPageValueType } from "../App";
+
+import H1Text from "../components/H1Text";
+
 import image1 from "../assets/tattoo-img-1.png";
 import image2 from "../assets/tattoo-img-2.png";
 import image3 from "../assets/tattoo-img-3.png";
@@ -12,7 +14,8 @@ import image9 from "../assets/tattoo-img-9.png";
 import image10 from "../assets/tattoo-img-10.png";
 import image11 from "../assets/tattoo-img-11.png";
 import image12 from "../assets/tattoo-img-12.png";
-import H1Text from "../components/H1Text";
+
+import { SelectedPageValueType } from "../App";
 
 type WorkSectionProps = {
   setSelectedPage: (value: SelectedPageValueType) => void;

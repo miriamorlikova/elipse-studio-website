@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import { ReactLenis } from "@studio-freight/react-lenis";
+
 import MouseCursor from "./components/MouseCursor";
 import LogoNav from "./components/LogoNav";
 import MainSection from "./layout/MainSection";
@@ -8,7 +10,6 @@ import AboutSection from "./layout/AboutSection";
 import WorkSection from "./layout/WorkSection";
 import PricesSection from "./layout/PricesSection";
 import ContactSection from "./layout/ContactSection";
-import Loader from "./components/Loader";
 import FooterSection from "./layout/FooterSection";
 
 export enum SelectedPageValueType {
@@ -30,7 +31,7 @@ const App = () => {
       <ReactLenis
         root
         options={{
-          smoothWheel: true, // Enable smooth scrolling with the wheel
+          smoothWheel: true,
           duration: 1.5,
           easing: (t) => 1 - Math.pow(1 - t, 4), // pomale zrychlovani a zpomalovani rozjezdu scrollovani
         }}
