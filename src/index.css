@@ -23,35 +23,28 @@
 
 @keyframes loading {
   20% {
-    background-position:
-      0% 0%,
-      50% 50%,
-      100% 50%;
+    background-position: 0% 0%, 50% 50%, 100% 50%;
   }
   40% {
-    background-position:
-      0% 100%,
-      50% 0%,
-      100% 50%;
+    background-position: 0% 100%, 50% 0%, 100% 50%;
   }
   60% {
-    background-position:
-      0% 50%,
-      50% 100%,
-      100% 0%;
+    background-position: 0% 50%, 50% 100%, 100% 0%;
   }
   80% {
-    background-position:
-      0% 50%,
-      50% 50%,
-      100% 100%;
+    background-position: 0% 50%, 50% 50%, 100% 100%;
   }
 }
 
 * {
   scrollbar-width: thin;
   scrollbar-color: #474747 #1a1a1a; /* Thumb color, track color */
-  cursor: none;
+}
+
+@media (min-width: 800px) {
+  * {
+    cursor: none;
+  }
 }
 
 /* MOON ROTATION */
@@ -66,9 +59,7 @@ textarea:-webkit-autofill {
   -webkit-text-fill-color: #fdf8f3 !important;
   font-family: inherit !important;
   font-size: inherit !important;
-  transition:
-    background-color 10000s ease-in-out 0s,
-    color 0s !important; /* tohle zamezuje prohlizeci aby zmenil pozadi na svou vlastni defaultni barvu na 10000s, coz je dost dlouha doba na to, aby se to v podstate pro usera nikdy nestalo */
+  transition: background-color 10000s ease-in-out 0s, color 0s !important; /* tohle zamezuje prohlizeci aby zmenil pozadi na svou vlastni defaultni barvu na 10000s, coz je dost dlouha doba na to, aby se to v podstate pro usera nikdy nestalo */
 }
 
 /* INPUT AUTOFILL STYLES FOR CHROME */
@@ -83,10 +74,7 @@ textarea:-internal-autofill-previewed {
   width: 55px;
   aspect-ratio: 0.75;
   --c: no-repeat linear-gradient(theme(colors.neutral.200) 0 0);
-  background:
-    var(--c) 0% 50%,
-    var(--c) 50% 50%,
-    var(--c) 100% 50%;
+  background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
   background-size: 20% 50%;
   animation: loading 1s infinite linear;
 }

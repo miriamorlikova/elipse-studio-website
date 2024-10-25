@@ -67,7 +67,7 @@ export default function WorkSection({ setSelectedPage }: WorkSectionProps) {
           <motion.p
             initial={{ opacity: 0, x: -70 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: true }}
             transition={{ type: "spring", delay: 0.3 }}
           >
             At Elipse Tattoo Studio, every tattoo we create is a testament to
@@ -89,7 +89,7 @@ export default function WorkSection({ setSelectedPage }: WorkSectionProps) {
             variants={container}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.1 }}
           >
             {imgArray.map((image, index) => (

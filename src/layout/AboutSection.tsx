@@ -22,7 +22,7 @@ export default function AboutSection({ setSelectedPage }: AboutSectionProps) {
           className="flex flex-col gap-8 leading-[1.6rem] xl:leading-8 xl:text-xl xl:mt-6 lg:text-lg sm:text-base text-sm"
           initial={{ opacity: 0, x: -70 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.3, type: "spring" }}
         >
           <p>

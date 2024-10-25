@@ -11,6 +11,7 @@ import WorkSection from "./layout/WorkSection";
 import PricesSection from "./layout/PricesSection";
 import ContactSection from "./layout/ContactSection";
 import FooterSection from "./layout/FooterSection";
+import { useMediaQuery } from "./hooks/useMediaQuery";
 
 export enum SelectedPageValueType {
   Home = "home",
@@ -21,10 +22,11 @@ export enum SelectedPageValueType {
   ContactUs = "contactus",
 }
 
-const App = () => {
+export default function App() {
   const [selectedPage, setSelectedPage] = useState<SelectedPageValueType>(
     SelectedPageValueType.Home
   );
+  const onPcScreens = useMediaQuery("(min-width: 800px)");
 
   return (
     <div className="bg-black min-h-screen min-w-full relative">
@@ -36,7 +38,7 @@ const App = () => {
           easing: (t) => 1 - Math.pow(1 - t, 4), // pomale zrychlovani a zpomalovani rozjezdu scrollovani
         }}
       >
-        <MouseCursor />
+        {onPcScreens && <MouseCursor />}
         <LogoNav setSelectedPage={setSelectedPage} />
         <MainSection
           setSelectedPage={setSelectedPage}
@@ -51,6 +53,4 @@ const App = () => {
       </ReactLenis>
     </div>
   );
-};
-
-export default App;
+}
