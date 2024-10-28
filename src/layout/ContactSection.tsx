@@ -74,11 +74,10 @@ export default function ContactSection({
   }
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const emailValue = e.target.value;
     setEmail(e.target.value);
 
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
-
-    if (!emailPattern.test(e.target.value)) {
+    if (!emailValue.includes("@") || !emailValue.includes(".")) {
       setEmailError("Please enter a valid email address.");
     } else {
       setEmailError("");
@@ -220,7 +219,6 @@ export default function ContactSection({
             type="text"
             value={email}
             placeholder="Your email *"
-            pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i"
             required
             onChange={handleEmailChange}
           />

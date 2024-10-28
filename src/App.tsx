@@ -29,7 +29,7 @@ export default function App() {
   const onPcScreens = useMediaQuery("(min-width: 800px)");
 
   return (
-    <div className="bg-black min-h-screen min-w-full relative">
+    <div className="bg-black min-h-svh min-w-full relative">
       <ReactLenis
         root
         options={{
