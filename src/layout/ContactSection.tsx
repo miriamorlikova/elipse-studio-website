@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { BiSend } from "react-icons/bi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns"; 
+import { format } from "date-fns";
 
 import H1Text from "../components/H1Text";
 import Input from "../components/Input";
@@ -76,7 +76,7 @@ export default function ContactSection({
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
 
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
 
     if (!emailPattern.test(e.target.value)) {
       setEmailError("Please enter a valid email address.");
@@ -217,10 +217,10 @@ export default function ContactSection({
             <p className="text-red-500 text-sm mt-2">{nameError}</p>
           )}
           <Input
-            type="email"
+            type="text"
             value={email}
             placeholder="Your email *"
-            pattern="/^[A-Z0-9._%+-]+@[A-Z0-9._-]+.[A-Z]{2,}$/i"
+            pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i"
             required
             onChange={handleEmailChange}
           />
